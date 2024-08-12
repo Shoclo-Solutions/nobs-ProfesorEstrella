@@ -14,10 +14,10 @@ Course.belongsTo(Professor, { onUpdate: 'CASCADE', onDelete: 'CASCADE' });
 // sequelizeInstance.sync({ force: true });
 
 sequelizeInstance
-	.sync({ force: true })
-	.then((data) => {
-		console.info('Database synced successfully');
-	})
-	.catch((error) => {
-		console.error('Error while syncing database:', error);
-	});
+  .sync({ force: true })
+  .then((data) => {
+    console.info('Database synced successfully');
+  })
+  .catch((error) => {
+    console.error('Error while syncing database:', error);
+  });
