@@ -8,11 +8,7 @@ const Professor = sequelizeInstance.define('professor', {
 		allowNull: false,
 		primaryKey: true,
 	},
-	name: {
-		type: Sequelize.STRING,
-		allowNull: false,
-	},
-	last_name: {
+	fullname: {
 		type: Sequelize.STRING,
 		allowNull: false,
 	},

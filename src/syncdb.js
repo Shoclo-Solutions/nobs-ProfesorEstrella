@@ -14,7 +14,7 @@ Course.belongsTo(Professor, { onUpdate: 'CASCADE', onDelete: 'CASCADE' });
 // sequelizeInstance.sync({ force: true });
 
 sequelizeInstance
-	.sync({ alter: true })
+	.sync({ force: true })
 	.then((data) => {
 		console.info('Database synced successfully');
 	})

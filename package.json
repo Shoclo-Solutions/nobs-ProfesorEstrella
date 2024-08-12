@@ -1,23 +1,24 @@
 {
-    "name": "commandkit-app",
-    "version": "0.0.0",
-    "main": "./src/index.js",
-    "scripts": {
-        "start": "node ./src/index.js",
-        "dev": "nodemon --ext js,json,ts ./src/index.js",
-        "devdb": "node ./src/syncdb.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "type": "commonjs",
-    "dependencies": {
-        "commandkit": "^0.1.10",
-        "discord.js": "^14.15.3",
-        "dotenv": "^16.4.5",
-        "nodemon": "^3.1.4",
-        "sequelize": "^6.37.3",
-        "sqlite3": "^5.1.7"
-    }
+	"name": "commandkit-app",
+	"version": "0.0.0",
+	"main": "./src/index.js",
+	"scripts": {
+		"start": "node ./src/index.js",
+		"dev": "nodemon --ext js,json,ts ./src/index.js",
+		"devdb": "node ./src/syncdb.js",
+		"seeddb": "node ./src/utils/seed.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"type": "commonjs",
+	"dependencies": {
+		"commandkit": "^0.1.10",
+		"discord.js": "^14.15.3",
+		"dotenv": "^16.4.5",
+		"nodemon": "^3.1.4",
+		"sequelize": "^6.37.3",
+		"sqlite3": "^5.1.7"
+	}
 }
