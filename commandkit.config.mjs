@@ -1,5 +1,5 @@
-import { defineConfig } from 'commandkit';
+import { defineConfig } from "commandkit";
 export default defineConfig({
-	src: 'src',
-	main: 'index.mjs',
+  src: "src",
+  main: "index.mjs",
 });
