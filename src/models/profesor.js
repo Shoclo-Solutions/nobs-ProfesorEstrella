@@ -21,7 +21,7 @@ const Professor = sequelizeInstance.define('professor', {
     allowNull: true,
   },
   averageRating: {
-    type: Sequelize.DECIMAL(2, 1),
+    type: Sequelize.FLOAT(2, 2),
     allowNull: true,
     defaultValue: 0,
   },

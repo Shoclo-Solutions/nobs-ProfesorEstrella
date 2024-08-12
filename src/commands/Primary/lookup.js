@@ -13,6 +13,7 @@ module.exports = {
         description: 'Nombre(s) y/o apellido(s) del profesor a buscar.',
         type: 3,
         required: true,
+        min_length: 1,
       },
     ],
   },
@@ -23,7 +24,7 @@ module.exports = {
   run: async ({ interaction }) => {
     /** @type {String} */
     const professor = interaction.options.getString('profesor');
-    const pageSize = 5;
+    const pageSize = 4;
     let page = 1;
 
     /**
@@ -82,7 +83,21 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(professor.fullname)
         .setDescription(`Detalles del profesor ${professor.fullname}`)
-        .addFields({ name: 'Nombre Completo', value: professor.fullname })
+        .addFields(
+          { name: 'Nombre Completo', value: professor.fullname || 'N/A' },
+          { name: 'Contrato', value: professor.contract || 'N/A' },
+          { name: 'Correo institucional', value: professor.email || 'N/A' },
+          {
+            name: 'Cursos',
+            value:
+              professor.courses.map((course) => course.name).join('\n') ||
+              'N/A',
+          },
+          {
+            name: 'Calificación Promedio',
+            value: professor.averageRating?.toString() || 'N/A',
+          }
+        )
         .setColor('Green')
         .setTimestamp();
       return embed;

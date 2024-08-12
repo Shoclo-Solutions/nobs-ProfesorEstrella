@@ -31,51 +31,51 @@ sequelizeInstance
         by: '@user1',
         content: 'como se usa esto',
         rating: 3,
-        professorId: 1,
       },
       {
         by: '@user2',
         content: 'no es muy bueno explicando, se la pasa con ppts',
         rating: 1,
-        professorId: 1,
       },
       {
         by: '@user3',
         content: 'muy buen profesor, explica muy bien',
         rating: 5,
-        professorId: 2,
       },
       {
         by: '@user4',
         content: 'no es muy bueno explicando, se la pasa con ppts',
         rating: 1,
-        professorId: 2,
       },
       {
         by: '@user5',
         content: 'muy buen profesor, explica muy bien',
         rating: 5,
-        professorId: 3,
       },
       {
         by: '@user6',
         content: 'no es muy bueno explicando, se la pasa con ppts',
         rating: 1,
-        professorId: 3,
       },
       {
         by: '@user7',
         content: 'muy buen profesor, explica muy bien',
         rating: 5,
-        professorId: 4,
       },
       {
         by: '@user8',
         content: 'no es muy bueno explicando, se la pasa con ppts',
         rating: 1,
-        professorId: 4,
       },
     ]).then(() => {
+      // Relate comments to professors
+      Professor.findAll().then((professors) => {
+        Comment.findAll().then((comments) => {
+          professors.forEach((professor) => {
+            professor.setComentarios(comments);
+          });
+        });
+      });
       console.info('Comments saved!');
     });
     Course.bulkCreate([
@@ -96,6 +96,13 @@ sequelizeInstance
         professorId: 4,
       },
     ]).then(() => {
+      Professor.findAll().then((professors) => {
+        Course.findAll().then((courses) => {
+          professors.forEach((professor) => {
+            professor.setCursos(courses);
+          });
+        });
+      });
       console.info('Courses saved!');
     });
   })
