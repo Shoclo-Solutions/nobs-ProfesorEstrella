@@ -1,22 +1,16 @@
-<<<<<<< HEAD
 const { Op } = require('sequelize');
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
 const Professor = require('../../models/profesor');
-=======
-const { Op } = require("sequelize");
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js");
-const Professor = require("../../models/profesor");
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
 
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
   data: {
-    name: "lookup",
-    description: "Busca a un profesor en la base de datos.",
+    name: 'lookup',
+    description: 'Busca a un profesor en la base de datos.',
     options: [
       {
-        name: "profesor",
-        description: "Nombre(s) y/o apellido(s) del profesor a buscar.",
+        name: 'profesor',
+        description: 'Nombre(s) y/o apellido(s) del profesor a buscar.',
         type: 3,
         required: true,
       },
@@ -60,17 +54,10 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(`Resultados para ${professor}`)
         .setDescription(
-<<<<<<< HEAD
           professors.map((prof) => prof.fullname).join('\n') ||
             'No se encontraron resultados.'
         )
         .setColor('Blue')
-=======
-          professors.map((prof) => prof.fullname).join("\n") ||
-            "No se encontraron resultados."
-        )
-        .setColor("Blue")
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
         .setTimestamp()
         .setFooter({ text: `Página ${page} de ${totalPages}` });
 
@@ -79,11 +66,7 @@ module.exports = {
           .setCustomId(`prof_${prof.id}`)
           .setLabel(prof.fullname)
           .setStyle(1)
-<<<<<<< HEAD
           .setEmoji('🧑‍🏫')
-=======
-          .setEmoji("🧑‍🏫")
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
       );
 
       const row = new ActionRowBuilder().addComponents(buttons);
@@ -99,7 +82,6 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(professor.fullname)
         .setDescription(`Detalles del profesor ${professor.fullname}`)
-<<<<<<< HEAD
         .addFields(
           { name: 'Nombre Completo', value: professor.fullname || 'N/A' },
           { name: 'Contrato', value: professor.contract || 'N/A' },
@@ -116,10 +98,6 @@ module.exports = {
           }
         )
         .setColor('Green')
-=======
-        .addFields({ name: "Nombre Completo", value: professor.fullname })
-        .setColor("Green")
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
         .setTimestamp();
       return embed;
     };
@@ -136,19 +114,11 @@ module.exports = {
     });
 
     if (totalPages > 1) {
-<<<<<<< HEAD
       await embedMessage.react('⬅️');
       await embedMessage.react('➡️');
 
       const filter = (reaction, user) => {
         return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot;
-=======
-      await embedMessage.react("⬅️");
-      await embedMessage.react("➡️");
-
-      const filter = (reaction, user) => {
-        return ["⬅️", "➡️"].includes(reaction.emoji.name) && !user.bot;
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
       };
 
       const collector = embedMessage.createReactionCollector({
@@ -156,17 +126,10 @@ module.exports = {
         time: 60000,
       });
 
-<<<<<<< HEAD
       collector.on('collect', async (reaction, user) => {
         if (reaction.emoji.name === '⬅️' && page > 1) {
           page--;
         } else if (reaction.emoji.name === '➡️' && page < totalPages) {
-=======
-      collector.on("collect", async (reaction, user) => {
-        if (reaction.emoji.name === "⬅️" && page > 1) {
-          page--;
-        } else if (reaction.emoji.name === "➡️" && page < totalPages) {
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
           page++;
         }
 
@@ -181,23 +144,14 @@ module.exports = {
     }
 
     const buttonFilter = (i) =>
-<<<<<<< HEAD
       i.customId.startsWith('prof_') && i.user.id === interaction.user.id;
-=======
-      i.customId.startsWith("prof_") && i.user.id === interaction.user.id;
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
     const buttonCollector = embedMessage.createMessageComponentCollector({
       filter: buttonFilter,
       time: 60000,
     });
 
-<<<<<<< HEAD
     buttonCollector.on('collect', async (i) => {
       const professorId = i.customId.split('_')[1];
-=======
-    buttonCollector.on("collect", async (i) => {
-      const professorId = i.customId.split("_")[1];
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
       const selectedProfessor = await Professor.findByPk(professorId);
       if (selectedProfessor) {
         const detailEmbed = createDetailEmbed(selectedProfessor);
@@ -209,17 +163,10 @@ module.exports = {
   /** @type {import('commandkit').CommandOptions} */
   options: {
     botPermissions: [
-<<<<<<< HEAD
       'SendMessages',
       'EmbedLinks',
       'AddReactions',
       'ManageMessages',
-=======
-      "SendMessages",
-      "EmbedLinks",
-      "AddReactions",
-      "ManageMessages",
->>>>>>> c9e488de33396ec30513d2b0580abd32f78169eb
     ],
   },
 };
