@@ -1,7 +1,7 @@
 const sequelizeInstance = require('./utils/database');
-const Professor = require('./models/profesor');
-const Comment = require('./models/comentario');
-const Course = require('./models/curso');
+const Professor = require('./models/profesor.js');
+const Comment = require('./models/comentario.js');
+const Course = require('./models/curso.js');
 
 // ONLY ADDS NEW COLUMNS, DOESNT DROP ANYTHING.
 // sequelizeInstance.sync({ alter: true });
