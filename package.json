@@ -6,8 +6,7 @@
     "start": "node ./src/index.js",
     "dev": "nodemon --ext js,json,ts ./src/index.js",
     "format": "prettier --write .",
-    "devdb": "node ./src/syncdb.js",
-    "seeddb": "node ./src/utils/seed.js"
+    "devdb": "node ./src/syncdb.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +22,7 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "sequelize-cli": "^6.6.2"
   }
 }

@@ -1,16 +1,17 @@
-const { Op } = require("sequelize");
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js");
-const Professor = require("../../models/profesor");
+const { Op } = require('sequelize');
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
+const Professor = require('../../models/profesor');
+const Courses = require('../../models/curso');
 
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
   data: {
-    name: "lookup",
-    description: "Busca a un profesor en la base de datos.",
+    name: 'lookup',
+    description: 'Busca a un profesor en la base de datos.',
     options: [
       {
-        name: "profesor",
-        description: "Nombre(s) y/o apellido(s) del profesor a buscar.",
+        name: 'profesor',
+        description: 'Nombre(s) y/o apellido(s) del profesor a buscar.',
         type: 3,
         required: true,
       },
@@ -22,8 +23,8 @@ module.exports = {
    */
   run: async ({ interaction }) => {
     /** @type {String} */
-    const professor = interaction.options.getString("profesor");
-    const pageSize = 5;
+    const paramProfe = interaction.options.getString('profesor');
+    const pageSize = 4;
     let page = 1;
 
     /**
@@ -35,7 +36,7 @@ module.exports = {
       const { rows: professors, count } = await Professor.findAndCountAll({
         where: {
           fullname: {
-            [Op.like]: `%${professor}%`,
+            [Op.like]: `%${paramProfe}%`,
           },
         },
         limit: pageSize,
@@ -52,12 +53,12 @@ module.exports = {
      */
     const createEmbed = (professors, page, totalPages) => {
       const embed = new EmbedBuilder()
-        .setTitle(`Resultados para ${professor}`)
+        .setTitle(`Resultados para ${paramProfe}`)
         .setDescription(
-          professors.map((prof) => prof.fullname).join("\n") ||
-            "No se encontraron resultados."
+          professors.map((prof) => prof.fullname).join('\n') ||
+            'No se encontraron resultados.'
         )
-        .setColor("Blue")
+        .setColor('Blue')
         .setTimestamp()
         .setFooter({ text: `Página ${page} de ${totalPages}` });
 
@@ -66,7 +67,7 @@ module.exports = {
           .setCustomId(`prof_${prof.id}`)
           .setLabel(prof.fullname)
           .setStyle(1)
-          .setEmoji("🧑‍🏫")
+          .setEmoji('🧑‍🏫')
       );
 
       const row = new ActionRowBuilder().addComponents(buttons);
@@ -78,12 +79,33 @@ module.exports = {
      * @param {Professor} professor
      * @returns {import('discord.js').MessageEmbed}
      */
-    const createDetailEmbed = (professor) => {
+    const createDetailEmbed = async (professor) => {
+      const courses = await Courses.findAll({
+        where: {
+          professorId: professor.id,
+        },
+      });
+
+      const coursesNames =
+        courses.map((course) => course.name).join(', ') || 'N/A';
+
       const embed = new EmbedBuilder()
         .setTitle(professor.fullname)
         .setDescription(`Detalles del profesor ${professor.fullname}`)
-        .addFields({ name: "Nombre Completo", value: professor.fullname })
-        .setColor("Green")
+        .addFields(
+          { name: 'Nombre Completo', value: professor.fullname || 'N/A' },
+          { name: 'Contrato', value: professor.contract || 'N/A' },
+          { name: 'Correo institucional', value: professor.email || 'N/A' },
+          {
+            name: 'Cursos',
+            value: coursesNames,
+          },
+          {
+            name: 'Calificación Promedio',
+            value: professor.averageRating?.toString() || 'N/A',
+          }
+        )
+        .setColor('Green')
         .setTimestamp();
       return embed;
     };
@@ -100,11 +122,11 @@ module.exports = {
     });
 
     if (totalPages > 1) {
-      await embedMessage.react("⬅️");
-      await embedMessage.react("➡️");
+      await embedMessage.react('⬅️');
+      await embedMessage.react('➡️');
 
       const filter = (reaction, user) => {
-        return ["⬅️", "➡️"].includes(reaction.emoji.name) && !user.bot;
+        return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot;
       };
 
       const collector = embedMessage.createReactionCollector({
@@ -112,10 +134,10 @@ module.exports = {
         time: 60000,
       });
 
-      collector.on("collect", async (reaction, user) => {
-        if (reaction.emoji.name === "⬅️" && page > 1) {
+      collector.on('collect', async (reaction, user) => {
+        if (reaction.emoji.name === '⬅️' && page > 1) {
           page--;
-        } else if (reaction.emoji.name === "➡️" && page < totalPages) {
+        } else if (reaction.emoji.name === '➡️' && page < totalPages) {
           page++;
         }
 
@@ -130,17 +152,17 @@ module.exports = {
     }
 
     const buttonFilter = (i) =>
-      i.customId.startsWith("prof_") && i.user.id === interaction.user.id;
+      i.customId.startsWith('prof_') && i.user.id === interaction.user.id;
     const buttonCollector = embedMessage.createMessageComponentCollector({
       filter: buttonFilter,
       time: 60000,
     });
 
-    buttonCollector.on("collect", async (i) => {
-      const professorId = i.customId.split("_")[1];
+    buttonCollector.on('collect', async (i) => {
+      const professorId = i.customId.split('_')[1];
       const selectedProfessor = await Professor.findByPk(professorId);
       if (selectedProfessor) {
-        const detailEmbed = createDetailEmbed(selectedProfessor);
+        const detailEmbed = await createDetailEmbed(selectedProfessor);
         await i.update({ embeds: [detailEmbed], components: [] });
       }
     });
@@ -149,10 +171,10 @@ module.exports = {
   /** @type {import('commandkit').CommandOptions} */
   options: {
     botPermissions: [
-      "SendMessages",
-      "EmbedLinks",
-      "AddReactions",
-      "ManageMessages",
+      'SendMessages',
+      'EmbedLinks',
+      'AddReactions',
+      'ManageMessages',
     ],
   },
 };

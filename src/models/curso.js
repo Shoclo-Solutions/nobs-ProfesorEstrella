@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
-const sequelizeInstance = require("../utils/database");
+const Sequelize = require('sequelize');
+const sequelizeInstance = require('../utils/database');
 
-const Course = sequelizeInstance.define("course", {
+const Course = sequelizeInstance.define('course', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

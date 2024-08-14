@@ -1,6 +1,10 @@
+# Folders
 node_modules/
 .git/
+.commandkit/
+config/
+
+# Files
 package-lock.json
 .env
-.commandkit/
 *.sqlite

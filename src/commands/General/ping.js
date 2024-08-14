@@ -1,8 +1,8 @@
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
   data: {
-    name: "ping",
-    description: "Beware.. the pong!",
+    name: 'ping',
+    description: 'Beware.. the pong!',
   },
 
   /**
