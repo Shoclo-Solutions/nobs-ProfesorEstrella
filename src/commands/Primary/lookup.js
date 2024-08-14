@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require('discord.js');
 const Professor = require('../../models/profesor');
+const Courses = require('../../models/curso');
 
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
@@ -22,7 +23,7 @@ module.exports = {
    */
   run: async ({ interaction }) => {
     /** @type {String} */
-    const professor = interaction.options.getString('profesor');
+    const paramProfe = interaction.options.getString('profesor');
     const pageSize = 4;
     let page = 1;
 
@@ -35,7 +36,7 @@ module.exports = {
       const { rows: professors, count } = await Professor.findAndCountAll({
         where: {
           fullname: {
-            [Op.like]: `%${professor}%`,
+            [Op.like]: `%${paramProfe}%`,
           },
         },
         limit: pageSize,
@@ -52,7 +53,7 @@ module.exports = {
      */
     const createEmbed = (professors, page, totalPages) => {
       const embed = new EmbedBuilder()
-        .setTitle(`Resultados para ${professor}`)
+        .setTitle(`Resultados para ${paramProfe}`)
         .setDescription(
           professors.map((prof) => prof.fullname).join('\n') ||
             'No se encontraron resultados.'
@@ -78,7 +79,16 @@ module.exports = {
      * @param {Professor} professor
      * @returns {import('discord.js').MessageEmbed}
      */
-    const createDetailEmbed = (professor) => {
+    const createDetailEmbed = async (professor) => {
+      const courses = await Courses.findAll({
+        where: {
+          professorId: professor.id,
+        },
+      });
+
+      const coursesNames =
+        courses.map((course) => course.name).join(', ') || 'N/A';
+
       const embed = new EmbedBuilder()
         .setTitle(professor.fullname)
         .setDescription(`Detalles del profesor ${professor.fullname}`)
@@ -88,9 +98,7 @@ module.exports = {
           { name: 'Correo institucional', value: professor.email || 'N/A' },
           {
             name: 'Cursos',
-            value:
-              professor.courses.map((course) => course.name).join('\n') ||
-              'N/A',
+            value: coursesNames,
           },
           {
             name: 'Calificación Promedio',
@@ -154,7 +162,7 @@ module.exports = {
       const professorId = i.customId.split('_')[1];
       const selectedProfessor = await Professor.findByPk(professorId);
       if (selectedProfessor) {
-        const detailEmbed = createDetailEmbed(selectedProfessor);
+        const detailEmbed = await createDetailEmbed(selectedProfessor);
         await i.update({ embeds: [detailEmbed], components: [] });
       }
     });
