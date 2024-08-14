@@ -101,20 +101,36 @@ sequelizeInstance
     await Course.bulkCreate(
       [
         {
-          name: 'POO 1, Estructuras Discretas',
+          name: 'POO 1',
           professorId: 1,
         },
         {
-          name: 'Armado de vacitos 2, Estructuras de Datos Avanzadas',
+          name: 'Armado de vacitos 2',
           professorId: 1,
         },
         {
-          name: 'Calculo 1, POO 2',
+          name: 'Calculo 1',
           professorId: 3,
         },
         {
-          name: 'Calculo 2, Armado de vacitos 1',
+          name: 'Calculo 2',
           professorId: 2,
+        },
+        {
+          name: 'Estructuras de Datos Avanzadas',
+          professorId: 4,
+        },
+        {
+          name: 'POO 2',
+          professorId: 3,
+        },
+        {
+          name: 'Calculo 3',
+          professorId: 4,
+        },
+        {
+          name: 'Administración de juergas',
+          professorId: 1,
         },
       ],
       { validate: true }
