@@ -21,7 +21,11 @@ const Comment = sequelizeInstance.define(
     rating: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 1,
+      validate: {
+        min: 1,
+        max: 5,
+      },
     },
   },
   {
