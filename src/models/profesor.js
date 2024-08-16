@@ -23,13 +23,14 @@ const Professor = sequelizeInstance.define(
       allowNull: true,
     },
     averageRating: {
-      type: Sequelize.FLOAT(2, 2),
+      type: Sequelize.REAL(2, 1),
       allowNull: true,
-      defaultValue: 0,
+      defaultValue: 0.0,
     },
   },
   {
     paranoid: true,
+    tableName: 'professors',
   }
 );
 
