@@ -17,7 +17,7 @@ Con este bot, se busca agilizar el proceso de matricula de los alumnos mediante 
 
 ## Feedback
 
-¿No vez a tu profe? ¿Crees que podría ser mejor? ¿Le faltan funciones? Envíame tus comentarios a [mi correo](mailto:fallaangello@gmail.com)
+¿No vez a tu profe? ¿Crees que podría ser mejor? ¿Le faltan funciones? ¡Genera un [issue](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues/new) en el repositorio o [ponte en contacto conmigo](mailto:fallaangello@gmail.com)!
 
 ## Contributing
 
@@ -29,6 +29,8 @@ Please adhere to this project's `code of conduct`.
 
 ## Roadmap
 
-- [ ] Visualización de fotos de los profesores
+- [ ] Visualización de fotos de los profesores.
 
-- [ ] Posibilidad de sugerir profesores
+- [ ] Posibilidad de sugerir profesores via bot.
+
+- [ ] Implementación de un sistema de moderación automática.
