@@ -187,12 +187,15 @@ const setupPaginationCollector = (
       embeds: [embed],
       components: [row],
     });
-    await reaction.users.remove(user.id);
+  });
+
+  collector.on('end', async () => {
+    await embedMessage.reactions.removeAll().catch(() => {});
   });
 };
 
 /**
- * Sets up the button collector.
+ * Sets up the button collector. Executes different actions based on the button pressed.
  * @param {import('discord.js').Message} embedMessage
  * @param {import('commandkit').SlashCommandProps} commandInteraction
  */
@@ -206,7 +209,6 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
 
   buttonCollector.on('collect', async (i) => {
     const professorId = i.customId.split('_')[1];
-    console.log(`professorId: ${professorId}`); // Debugging log
     const selectedProfessor = await Professor.findByPk(professorId);
     if (selectedProfessor) {
       const detailEmbed = await createDetailEmbed(selectedProfessor);
@@ -214,6 +216,10 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         new ButtonBuilder()
           .setCustomId(`add_comment_${professorId}`)
           .setLabel('Añadir comentario')
+          .setStyle(1),
+        new ButtonBuilder()
+          .setCustomId(`view_comments_of_${professorId}_1`)
+          .setLabel('Ver comentarios')
           .setStyle(1),
         new ButtonBuilder()
           .setCustomId('go_back')
@@ -225,7 +231,9 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
   });
 
   const actionButtonFilter = (i) =>
-    (i.customId.startsWith('add_comment_') || i.customId === 'go_back') &&
+    (i.customId.startsWith('add_comment_') ||
+      i.customId === 'go_back' ||
+      i.customId.startsWith('view_comments_of_')) &&
     i.user.id === commandInteraction.user.id;
   const actionButtonCollector = embedMessage.createMessageComponentCollector({
     filter: actionButtonFilter,
@@ -239,6 +247,66 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         const selectedProfessor = await Professor.findByPk(professorId);
         if (selectedProfessor) {
           await handleAddComment(i, selectedProfessor);
+        }
+      } else if (i.customId.startsWith('view_comments_of_')) {
+        const professorId = i.customId.split('_')[3];
+        const pageStr = i.customId.split('_')[4];
+        const page = parseInt(pageStr, 10);
+        console.log(page);
+        const pageSize = 5;
+        const selectedProfessor = await Professor.findByPk(professorId);
+        if (selectedProfessor) {
+          const comments = await Comments.findAll({
+            where: {
+              professorId: professorId,
+            },
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+          });
+
+          const commentsText = comments
+            .map((comment) => `${comment.rating} ⭐\n${comment.content}`)
+            .join('\n\n');
+
+          const commentsEmbed = new EmbedBuilder()
+            .setTitle(`Comentarios sobre ${selectedProfessor.fullname}`)
+            .setDescription(commentsText || 'No hay comentarios aún.')
+            .setColor('Green')
+            .setTimestamp()
+            .setFooter({
+              text: 'Añade un comentario usando el botón de abajo.',
+            });
+
+          const totalComments = await Comments.count({
+            where: {
+              professorId: professorId,
+            },
+          });
+
+          const totalPages = Math.ceil(totalComments / pageSize);
+
+          const actionRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setCustomId(`add_comment_${professorId}`)
+              .setLabel('Añadir comentario')
+              .setStyle(1),
+            new ButtonBuilder()
+              .setCustomId(`view_comments_of_${professorId}_${page - 1}`)
+              .setLabel('Anterior')
+              .setStyle(1)
+              .setDisabled(page <= 1),
+            new ButtonBuilder()
+              .setCustomId(`view_comments_of_${professorId}_${page + 1}`)
+              .setLabel('Siguiente página')
+              .setStyle(1)
+              .setDisabled(page >= totalPages),
+            new ButtonBuilder()
+              .setCustomId('go_back')
+              .setLabel('Volver a la lista')
+              .setStyle(2)
+          );
+
+          await i.update({ embeds: [commentsEmbed], components: [actionRow] });
         }
       } else if (i.customId === 'go_back') {
         const paramProfe = commandInteraction.options.getString('profesor');
