@@ -26,6 +26,51 @@ Debido a la fase temprana del proyecto, las contribuciones, problemas y solicitu
 
 Cabe recalcar que estos están adheridos al [código de conducta](CODE_OF_CONDUCT.md) del proyecto.
 
+### Requisitos
+
+- [Node.js](https://nodejs.org/en/download/)
+- [npm](https://www.npmjs.com/get-npm)
+- [Git](https://git-scm.com/downloads)
+
+### Instalación
+
+1. Clona el repositorio
+
+   ```bash
+   git clone https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella.git
+   ```
+
+2. Instala las dependencias
+
+   ```bash
+   npm install
+   ```
+
+3. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno:
+
+   ```env
+   DISCORD_TOKEN = TuTokenDeDiscord
+   DEV_ID1 = TuIDDeDiscord
+   DEV_GUILD_ID1 = TuIDDeServidorDeDiscord
+   DB_USER = TuUsuarioDeBaseDeDatos
+   DB_PASS = TuContraseñaDeBaseDeDatos
+   ```
+
+4. Ejecuta el bot
+
+   El bot fue construido mediante [CommandKit](https://commandkit.js.org/), por lo que puedes ejecutarlo en modo de desarrollo con el siguiente comando:
+
+   ```bash
+   npx commandkit dev
+   ```
+
+   O en modo de producción con:
+
+   ```bash
+   npx commandkit build
+   npx commandkit start
+   ```
+
 ## Roadmap
 
 - [ ] Visualización de fotos de los profesores.
