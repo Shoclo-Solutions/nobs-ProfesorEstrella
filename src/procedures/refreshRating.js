@@ -3,9 +3,9 @@ const { QueryTypes } = require('sequelize');
 const sequelizeInstance = require('../utils/database.js');
 
 // Cron job that runs the refreshRating procedure every 1 minute
-// Asyncronous procedure that runs monthly to calculate and refresh the rating of all the professors
+// Asyncronous procedure that runs weekly to calculate and refresh the rating of all the professors
 const refreshRatingsJob = new CronJob(
-  '0 0 1 * *',
+  '0 6 * * 1',
   async function () {
     try {
       console.info('Running the refreshRating procedure...');
