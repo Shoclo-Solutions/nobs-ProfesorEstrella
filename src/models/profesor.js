@@ -30,6 +30,7 @@ const Professor = sequelizeInstance.define(
   },
   {
     paranoid: true,
+    tableName: 'professors',
   }
 );
 

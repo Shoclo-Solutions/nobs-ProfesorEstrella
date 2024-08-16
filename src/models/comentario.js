@@ -30,6 +30,7 @@ const Comment = sequelizeInstance.define(
   },
   {
     paranoid: true,
+    tableName: 'comments',
   }
 );
 
