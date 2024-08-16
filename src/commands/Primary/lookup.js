@@ -50,7 +50,7 @@ module.exports = {
 
     const embedMessage = await interaction.reply({
       embeds: [embed],
-      components: [row],
+      components: row ? [row] : [],
       fetchReply: true,
     });
 
@@ -118,6 +118,10 @@ const createEmbed = (professors, paramProfe, page, totalPages) => {
     .setColor('Blue')
     .setTimestamp()
     .setFooter({ text: `Página ${page} de ${totalPages}` });
+
+  if (professors.length === 0) {
+    return { embed, row: null };
+  }
 
   const buttons = professors.map((prof) =>
     new ButtonBuilder()
