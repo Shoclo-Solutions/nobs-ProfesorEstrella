@@ -10,7 +10,6 @@ const {
 const Professor = require('../../models/profesor');
 const Courses = require('../../models/curso');
 const Comments = require('../../models/comentario');
-const sequelizeInstance = require('../../utils/database');
 
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
@@ -371,21 +370,38 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
     }
     const comment = interaction.fields.getTextInputValue('commentInput');
 
-    // Create a new comment and associate it with the selected professor
-    await Comments.create(
-      {
-        by: interaction.user.id,
-        content: comment,
-        rating: rating,
-        professorId: toString(selectedProfessor.id),
-      },
-      { validate: true }
-    );
+    const professorId = selectedProfessor.id;
 
-    return interaction.reply({
-      content: 'Comentario añadido con éxito!',
-      ephemeral: true,
+    // Create a new comment and associate it with the selected professor
+    const newComment = Comments.create({
+      by: interaction.user.tag,
+      content: comment,
+      rating: rating,
+      // professorId: professorId,
     });
+
+    newComment.setProfessor(selectedProfessor);
+
+    // Check for the recently added comment
+    const comments = await Comments.findAll({
+      where: {
+        by: interaction.user.id,
+        professorId: professorId,
+      },
+    });
+
+    if (comments.length === 0) {
+      return interaction.reply({
+        content:
+          'Tu comentario fue guardado de manera exitosa, pero no se encontró en la base de datos. Por favor, contacta al desarrollador.',
+        ephemeral: true,
+      });
+    } else {
+      return interaction.reply({
+        content: 'Comentario añadido con éxito!',
+        ephemeral: true,
+      });
+    }
   } catch (error) {
     console.error(`There was an error saving the comment: ${error}`);
     return interaction.reply({
