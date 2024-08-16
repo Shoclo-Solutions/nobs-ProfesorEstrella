@@ -2,6 +2,7 @@ require('dotenv/config');
 
 const { Client, IntentsBitField } = require('discord.js');
 const { CommandKit } = require('commandkit');
+const { syncAndSeedDB } = require('./syncdb');
 
 const client = new Client({
   intents: [
@@ -23,4 +24,5 @@ new CommandKit({
   devGuildIds: [process.env.DEV_GUILD_ID1],
 });
 
+syncAndSeedDB();
 client.login(process.env.TOKEN);
