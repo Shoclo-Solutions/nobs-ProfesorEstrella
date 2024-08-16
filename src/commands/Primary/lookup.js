@@ -368,19 +368,31 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
         ephemeral: true,
       });
     }
-    const comment = interaction.fields.getTextInputValue('commentInput');
+    const modalCommentInput =
+      interaction.fields.getTextInputValue('commentInput');
 
     const professorId = selectedProfessor.id;
 
     // Create a new comment and associate it with the selected professor
-    const newComment = Comments.create({
-      by: interaction.user.tag,
-      content: comment,
-      rating: rating,
-      // professorId: professorId,
+    // Look if the user has already commented the same content on the professor
+    const [newComment, created] = await Comments.findOrCreate({
+      where: {
+        by: interaction.user.id,
+        content: modalCommentInput,
+        professorId: professorId,
+      },
     });
 
-    newComment.setProfessor(selectedProfessor);
+    if (!created) {
+      return interaction.reply({
+        content: 'Ya has añadido un comentario con el mismo contenido.',
+        ephemeral: true,
+      });
+    } else {
+      await newComment.update({
+        rating: rating,
+      });
+    }
 
     // Check for the recently added comment
     const comments = await Comments.findAll({
