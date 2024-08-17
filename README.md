@@ -71,6 +71,8 @@ Cabe recalcar que estos están adheridos al [código de conducta](.github\docs\C
    npx commandkit start
    ```
 
+## [Contribuir](./CONTRIBUTING.md)
+
 ## Roadmap
 
 - [ ] Visualización de fotos de los profesores.
