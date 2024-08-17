@@ -9,6 +9,8 @@
 
 Con este bot, se busca agilizar el proceso de matricula de los alumnos mediante la recomendación de profesores.
 
+[Try it!](https://discord.com/oauth2/authorize?client_id=1271110418882101312)
+
 ## Features
 
 - Actualización contínua del puntaje de los profesores
