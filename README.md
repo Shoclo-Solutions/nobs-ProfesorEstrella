@@ -24,7 +24,7 @@ Con este bot, se busca agilizar el proceso de matricula de los alumnos mediante 
 
 Debido a la fase temprana del proyecto, las contribuciones, problemas y solicitudes de funciones son bienvenidas.
 
-Cabe recalcar que estos están adheridos al [código de conducta](CODE_OF_CONDUCT.md) del proyecto.
+Cabe recalcar que estos están adheridos al [código de conducta](.github\docs\CODE_OF_CONDUCT.md) del proyecto.
 
 ### Requisitos
 
