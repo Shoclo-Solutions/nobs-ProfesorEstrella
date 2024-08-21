@@ -8,7 +8,6 @@ const {
   TextInputStyle,
 } = require('discord.js');
 const Professor = require('../../models/profesor');
-const Courses = require('../../models/curso');
 const Comments = require('../../models/comentario');
 
 module.exports = {
@@ -230,6 +229,7 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
     }
   });
 
+  // Filter for the action buttons (add comment, view comments, go back)
   const actionButtonFilter = (i) =>
     (i.customId.startsWith('add_comment_') ||
       i.customId === 'go_back' ||
@@ -243,12 +243,15 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
   actionButtonCollector.on('collect', async (i) => {
     try {
       if (i.customId.startsWith('add_comment_')) {
+        await embedMessage.reactions.removeAll().catch(() => {});
         const professorId = i.customId.split('_')[2];
         const selectedProfessor = await Professor.findByPk(professorId);
         if (selectedProfessor) {
           await handleAddComment(i, selectedProfessor);
         }
       } else if (i.customId.startsWith('view_comments_of_')) {
+        // Remove all reactions from the message
+        await embedMessage.reactions.removeAll().catch(() => {});
         const professorId = i.customId.split('_')[3];
         const pageStr = i.customId.split('_')[4];
         const page = parseInt(pageStr, 10);
@@ -265,7 +268,13 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
           });
 
           const commentsText = comments
-            .map((comment) => `${comment.rating} ⭐\n${comment.content}`)
+            .map((comment) => {
+              const coursesText =
+                comment.courses && comment.courses.length > 0
+                  ? `En: ${comment.courses}\n`
+                  : '';
+              return `${comment.rating} ⭐\n${coursesText}${comment.content}`;
+            })
             .join('\n\n');
 
           const commentsEmbed = new EmbedBuilder()
@@ -309,6 +318,8 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
           await i.update({ embeds: [commentsEmbed], components: [actionRow] });
         }
       } else if (i.customId === 'go_back') {
+        // Reapply the pagination reactions
+        await addPaginationReactions(embedMessage);
         const paramProfe = commandInteraction.options.getString('profesor');
         const pageSize = 4;
         let page = 1;
@@ -345,25 +356,12 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
  * @returns {Promise<import('discord.js').EmbedBuilder>}
  */
 const createDetailEmbed = async (professor) => {
-  const courses = await Courses.findAll({
-    where: {
-      professorId: professor.id,
-    },
-  });
-
-  const coursesNames = courses.map((course) => course.name).join(', ') || 'N/A';
-
   const embed = new EmbedBuilder()
     .setTitle(professor.fullname)
     .setDescription(`Detalles del profesor ${professor.fullname}`)
     .addFields(
       { name: 'Nombre Completo', value: professor.fullname || 'N/A' },
       { name: 'Contrato', value: professor.contract || 'N/A' },
-      { name: 'Correo institucional', value: professor.email || 'N/A' },
-      {
-        name: 'Cursos',
-        value: coursesNames,
-      },
       {
         name: 'Calificación Promedio',
         value: professor.averageRating?.toString() || 'N/A',
@@ -378,7 +376,7 @@ const createDetailEmbed = async (professor) => {
 };
 
 /**
- * Handles adding a comment.
+ * Handles the components in the modal to add a comment.
  * @param {import('discord.js').MessageComponentInteraction} interaction
  * @param {Professor} selectedProfessor
  */
@@ -394,6 +392,13 @@ const handleAddComment = async (interaction, selectedProfessor) => {
     .setStyle(TextInputStyle.Short)
     .setRequired(true);
 
+  const courseInput = new TextInputBuilder()
+    .setCustomId('courseInput')
+    .setPlaceholder('Curso(s) con los que has tenido al profesor')
+    .setLabel('Curso')
+    .setStyle(TextInputStyle.Short)
+    .setRequired(false);
+
   const commentInput = new TextInputBuilder()
     .setCustomId('commentInput')
     .setPlaceholder('Comentario')
@@ -403,10 +408,11 @@ const handleAddComment = async (interaction, selectedProfessor) => {
 
   // Create action rows for each input
   const ratingRow = new ActionRowBuilder().addComponents(ratingInput);
+  const courseRow = new ActionRowBuilder().addComponents(courseInput);
   const commentRow = new ActionRowBuilder().addComponents(commentInput);
 
   // Add action rows to the modal
-  modal.addComponents(ratingRow, commentRow);
+  modal.addComponents(ratingRow, commentRow, courseRow);
 
   await interaction.showModal(modal);
 
@@ -428,12 +434,13 @@ const handleAddComment = async (interaction, selectedProfessor) => {
  */
 const handleCommentSubmit = async (interaction, selectedProfessor) => {
   try {
-    const rating = interaction.fields.getTextInputValue('ratingInput');
+    const modalRatingInput =
+      interaction.fields.getTextInputValue('ratingInput');
     if (
-      isNaN(rating) ||
-      rating < 1 ||
-      rating > 5 ||
-      !Number.isInteger(+rating)
+      isNaN(modalRatingInput) ||
+      modalRatingInput < 1 ||
+      modalRatingInput > 5 ||
+      !Number.isInteger(+modalRatingInput)
     ) {
       return interaction.reply({
         content: 'Error: La calificación debe ser un número entre 1 y 5.',
@@ -443,6 +450,17 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
     const modalCommentInput =
       interaction.fields.getTextInputValue('commentInput');
 
+    const modalCourseInput =
+      interaction.fields.getTextInputValue('courseInput');
+
+    // TODO: Check if courses are uni courses
+    if (Number.isInteger(modalCourseInput)) {
+      return interaction.reply({
+        content: 'Error: El curso no puede ser un número.',
+        ephemeral: true,
+      });
+    }
+
     const professorId = selectedProfessor.id;
 
     // Create a new comment and associate it with the selected professor
@@ -451,6 +469,7 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
       where: {
         by: interaction.user.id,
         content: modalCommentInput,
+        courses: modalCourseInput ? modalCourseInput : null,
         professorId: professorId,
       },
     });
@@ -462,7 +481,7 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
       });
     } else {
       await newComment.update({
-        rating: rating,
+        modalRatingInput: modalRatingInput,
       });
     }
 

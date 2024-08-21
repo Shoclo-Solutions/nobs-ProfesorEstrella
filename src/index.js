@@ -2,7 +2,7 @@ require('dotenv/config');
 
 const { Client, IntentsBitField } = require('discord.js');
 const { CommandKit } = require('commandkit');
-const { syncAndSeedDB } = require('./syncdb');
+const { syncAndSeedDB } = require('../.external/syncdb');
 const { default: startAllJobs } = require('./procedures/jobHoarder');
 
 const client = new Client({
@@ -25,6 +25,8 @@ new CommandKit({
   devGuildIds: [process.env.DEV_GUILD_ID1],
 });
 
-syncAndSeedDB();
+if (process.env.NODE_ENV === 'development') {
+  syncAndSeedDB();
+}
 startAllJobs();
 client.login(process.env.TOKEN);
