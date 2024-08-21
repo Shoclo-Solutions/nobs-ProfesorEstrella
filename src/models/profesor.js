@@ -18,10 +18,6 @@ const Professor = sequelizeInstance.define(
       type: Sequelize.STRING,
       allowNull: true,
     },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
     averageRating: {
       type: Sequelize.REAL(2, 1),
       allowNull: true,

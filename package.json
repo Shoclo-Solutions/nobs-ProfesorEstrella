@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon --ext js,json,ts ./src/index.js",
-    "format": "prettier --write .",
-    "devdb": "node ./src/syncdb.js"
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",

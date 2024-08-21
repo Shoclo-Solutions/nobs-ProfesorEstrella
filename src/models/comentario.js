@@ -18,6 +18,10 @@ const Comment = sequelizeInstance.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    courses: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     rating: {
       type: Sequelize.INTEGER,
       allowNull: false,
