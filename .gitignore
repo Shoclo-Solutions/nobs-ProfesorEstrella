@@ -2,9 +2,10 @@
 node_modules/
 .git/
 .commandkit/
+.external/
 dist/
 
 # Files
 package-lock.json
-.env
+.env*
 *.sqlite
