@@ -25,8 +25,6 @@ new CommandKit({
   devGuildIds: [process.env.DEV_GUILD_ID1],
 });
 
-if (process.env.NODE_ENV === 'development') {
-  syncAndSeedDB();
-}
+syncAndSeedDB();
 startAllJobs();
 client.login(process.env.TOKEN);
