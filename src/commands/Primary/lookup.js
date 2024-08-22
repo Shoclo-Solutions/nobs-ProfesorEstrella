@@ -165,7 +165,7 @@ const setupPaginationCollector = (
 
   const collector = embedMessage.createReactionCollector({
     filter,
-    time: 60000,
+    time: 120000,
   });
 
   collector.on('collect', async (reaction, user) => {
@@ -203,13 +203,14 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
     i.customId.startsWith('prof_') && i.user.id === commandInteraction.user.id;
   const buttonCollector = embedMessage.createMessageComponentCollector({
     filter: buttonFilter,
-    time: 60000,
+    time: 120000,
   });
 
   buttonCollector.on('collect', async (i) => {
     const professorId = i.customId.split('_')[1];
     const selectedProfessor = await Professor.findByPk(professorId);
     if (selectedProfessor) {
+      await embedMessage.reactions.removeAll().catch(() => {});
       const detailEmbed = await createDetailEmbed(selectedProfessor);
       const actionRow = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
@@ -229,6 +230,23 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
     }
   });
 
+  buttonCollector.on('end', async () => {
+    // Remove all reactions from the message and change the embed message to say it was cancelled due to inactivity
+    await embedMessage.reactions.removeAll().catch(() => {});
+    await embedMessage.edit({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle('Búsqueda cancelada')
+          .setDescription(
+            'La búsqueda ha sido cancelada debido al límite de tiempo. Por favor, intenta de nuevo.'
+          )
+          .setColor('Red')
+          .setTimestamp(),
+      ],
+      components: [],
+    });
+  });
+
   // Filter for the action buttons (add comment, view comments, go back)
   const actionButtonFilter = (i) =>
     (i.customId.startsWith('add_comment_') ||
@@ -237,7 +255,7 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
     i.user.id === commandInteraction.user.id;
   const actionButtonCollector = embedMessage.createMessageComponentCollector({
     filter: actionButtonFilter,
-    time: 60000,
+    time: 120000,
   });
 
   actionButtonCollector.on('collect', async (i) => {
@@ -348,6 +366,24 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
       });
     }
   });
+
+  actionButtonCollector.on('end', async () => {
+    await embedMessage.reactions.removeAll().catch(() => {});
+
+    // Remove all reactions from the message and change the embed message to say it was cancelled due to inactivity
+    await embedMessage.edit({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle('Búsqueda cancelada')
+          .setDescription(
+            'La búsqueda ha sido cancelada debido al límite de tiempo. Por favor, intenta de nuevo.'
+          )
+          .setColor('Red')
+          .setTimestamp(),
+      ],
+      components: [],
+    });
+  });
 };
 
 /**
@@ -418,7 +454,7 @@ const handleAddComment = async (interaction, selectedProfessor) => {
 
   interaction
     .awaitModalSubmit({
-      time: 60000,
+      time: 120000,
       filter: (i) => i.customId === 'commentModal',
     })
     .then((i) => handleCommentSubmit(i, selectedProfessor))
@@ -454,9 +490,10 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
       interaction.fields.getTextInputValue('courseInput');
 
     // TODO: Check if courses are uni courses
-    if (Number.isInteger(modalCourseInput)) {
+    // Check if modalCourseInput is a number when it should be a string
+    if (modalCourseInput && !isNaN(modalCourseInput)) {
       return interaction.reply({
-        content: 'Error: El curso no puede ser un número.',
+        content: 'Error: El curso debe ser un texto, no un número.',
         ephemeral: true,
       });
     }
