@@ -501,25 +501,35 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
     const professorId = selectedProfessor.id;
 
     // Create a new comment and associate it with the selected professor
-    // Look if the user has already commented the same content on the professor
-    const [newComment, created] = await Comments.findOrCreate({
+    // Look if the user has already commented the same content on the professor. If so, change the rating, content and courses. If not, create a new comment.
+    const [comment, created] = await Comments.findOrCreate({
       where: {
         by: interaction.user.id,
-        content: modalCommentInput,
-        courses: modalCourseInput ? modalCourseInput : null,
         professorId: professorId,
+      },
+      defaults: {
+        by: interaction.user.id,
+        professorId: professorId,
+        rating: modalRatingInput,
+        content: modalCommentInput,
+        courses: modalCourseInput,
       },
     });
 
     if (!created) {
-      return interaction.reply({
-        content: 'Ya has añadido un comentario con el mismo contenido.',
-        ephemeral: true,
-      });
-    } else {
-      await newComment.update({
-        modalRatingInput: modalRatingInput,
-      });
+      await Comments.update(
+        {
+          rating: modalRatingInput,
+          courses: modalCourseInput,
+          content: modalCommentInput,
+        },
+        {
+          where: {
+            by: interaction.user.id,
+            professorId: professorId,
+          },
+        }
+      );
     }
 
     // Check for the recently added comment
