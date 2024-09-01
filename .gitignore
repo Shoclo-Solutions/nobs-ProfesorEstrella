@@ -4,6 +4,7 @@ node_modules/
 .commandkit/
 .external/
 dist/
+.scannerwork/
 
 # Files
 package-lock.json
