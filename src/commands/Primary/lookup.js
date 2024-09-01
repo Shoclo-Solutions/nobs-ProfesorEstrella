@@ -9,6 +9,7 @@ const {
 } = require('discord.js');
 const Professor = require('../../models/profesor');
 const Comments = require('../../models/comentario');
+const PAGE_SIZE = 4;
 
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
@@ -30,15 +31,14 @@ module.exports = {
    */
   run: async ({ interaction, client }) => {
     const paramProfe = interaction.options.getString('profesor');
-    const pageSize = 4;
     let page = 1;
 
     const { professors, count } = await fetchProfessors(
       paramProfe,
       page,
-      pageSize
+      PAGE_SIZE
     );
-    const totalPages = Math.ceil(count / pageSize);
+    const totalPages = Math.ceil(count / PAGE_SIZE);
 
     const { embed, row } = createEmbed(
       professors,
@@ -60,7 +60,7 @@ module.exports = {
         paramProfe,
         page,
         totalPages,
-        pageSize
+        PAGE_SIZE
       );
     }
 
@@ -82,18 +82,17 @@ module.exports = {
  * Fetches professors from the database according to the search term and page number.
  * @param {string} paramProfe
  * @param {number} page
- * @param {number} pageSize
  * @returns {Promise<{ professors: Professor[], count: number }>}
  */
-const fetchProfessors = async (paramProfe, page, pageSize) => {
-  const offset = (page - 1) * pageSize;
+const fetchProfessors = async (paramProfe, page) => {
+  const offset = (page - 1) * PAGE_SIZE;
   const { rows: professors, count } = await Professor.findAndCountAll({
     where: {
       fullname: {
         [Op.like]: `%${paramProfe}%`,
       },
     },
-    limit: pageSize,
+    limit: PAGE_SIZE,
     offset: offset,
   });
   return { professors, count };
@@ -150,14 +149,12 @@ const addPaginationReactions = async (embedMessage) => {
  * @param {string} paramProfe
  * @param {number} page
  * @param {number} totalPages
- * @param {number} pageSize
  */
 const setupPaginationCollector = (
   embedMessage,
   paramProfe,
   page,
-  totalPages,
-  pageSize
+  totalPages
 ) => {
   const filter = (reaction, user) => {
     return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot;
@@ -175,7 +172,7 @@ const setupPaginationCollector = (
       page++;
     }
 
-    const { professors } = await fetchProfessors(paramProfe, page, pageSize);
+    const { professors } = await fetchProfessors(paramProfe, page);
     const { embed, row } = createEmbed(
       professors,
       paramProfe,
@@ -273,16 +270,14 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         const professorId = i.customId.split('_')[3];
         const pageStr = i.customId.split('_')[4];
         const page = parseInt(pageStr, 10);
-        console.log(page);
-        const pageSize = 5;
         const selectedProfessor = await Professor.findByPk(professorId);
         if (selectedProfessor) {
           const comments = await Comments.findAll({
             where: {
               professorId: professorId,
             },
-            limit: pageSize,
-            offset: (page - 1) * pageSize,
+            limit: PAGE_SIZE,
+            offset: (page - 1) * PAGE_SIZE,
           });
 
           const commentsText = comments
@@ -310,7 +305,7 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
             },
           });
 
-          const totalPages = Math.ceil(totalComments / pageSize);
+          const totalPages = Math.ceil(totalComments / PAGE_SIZE);
 
           const actionRow = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
@@ -336,18 +331,14 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
           await i.update({ embeds: [commentsEmbed], components: [actionRow] });
         }
       } else if (i.customId === 'go_back') {
-        // Reapply the pagination reactions
-        await addPaginationReactions(embedMessage);
         const paramProfe = commandInteraction.options.getString('profesor');
-        const pageSize = 4;
         let page = 1;
 
         const { professors, count } = await fetchProfessors(
           paramProfe,
-          page,
-          pageSize
+          page
         );
-        const totalPages = Math.ceil(count / pageSize);
+        const totalPages = Math.ceil(count / PAGE_SIZE);
 
         const { embed, row } = createEmbed(
           professors,
@@ -357,6 +348,10 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         );
 
         await i.update({ embeds: [embed], components: [row] });
+
+        if (totalPages > 1 ) {
+          await addPaginationReactions(embedMessage);
+        }
       }
     } catch (error) {
       console.error(`Error handling button interaction: ${error}`);
