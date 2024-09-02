@@ -31,13 +31,9 @@ module.exports = {
    */
   run: async ({ interaction, client }) => {
     const paramProfe = interaction.options.getString('profesor');
-    let page = 1;
+    const page = 1;
 
-    const { professors, count } = await fetchProfessors(
-      paramProfe,
-      page,
-      PAGE_SIZE
-    );
+    const { professors, count } = await fetchProfessors(paramProfe, page);
     const totalPages = Math.ceil(count / PAGE_SIZE);
 
     const { embed, row } = createEmbed(
@@ -55,13 +51,7 @@ module.exports = {
 
     if (totalPages > 1) {
       await addPaginationReactions(embedMessage);
-      setupPaginationCollector(
-        embedMessage,
-        paramProfe,
-        page,
-        totalPages,
-        PAGE_SIZE
-      );
+      setupPaginationCollector(embedMessage, paramProfe, page, totalPages);
     }
 
     setupButtonCollector(embedMessage, interaction);
@@ -270,6 +260,7 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         const professorId = i.customId.split('_')[3];
         const pageStr = i.customId.split('_')[4];
         const page = parseInt(pageStr, 10);
+        console.log(page);
         const selectedProfessor = await Professor.findByPk(professorId);
         if (selectedProfessor) {
           const comments = await Comments.findAll({
@@ -332,12 +323,9 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         }
       } else if (i.customId === 'go_back') {
         const paramProfe = commandInteraction.options.getString('profesor');
-        let page = 1;
+        const page = 1;
 
-        const { professors, count } = await fetchProfessors(
-          paramProfe,
-          page
-        );
+        const { professors, count } = await fetchProfessors(paramProfe, page);
         const totalPages = Math.ceil(count / PAGE_SIZE);
 
         const { embed, row } = createEmbed(
@@ -349,7 +337,7 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
 
         await i.update({ embeds: [embed], components: [row] });
 
-        if (totalPages > 1 ) {
+        if (totalPages > 1) {
           await addPaginationReactions(embedMessage);
         }
       }
