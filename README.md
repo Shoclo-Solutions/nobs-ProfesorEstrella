@@ -77,8 +77,4 @@ Cabe recalcar que estos están adheridos al [código de conducta](.github\docs\C
 
 ## Roadmap
 
-- [ ] Visualización de fotos de los profesores.
-
-- [ ] Posibilidad de sugerir profesores via bot.
-
-- [ ] Implementación del sistema de moderación automática.
+Visita el trello del proyecto para ver el [roadmap](https://trello.com/b/yUarj65g/mi-profe-estrella).
