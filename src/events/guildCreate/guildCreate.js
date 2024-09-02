@@ -17,7 +17,7 @@ module.exports = (guild) => {
 
   /** * @type {import('discord.js').TextChannel} */
   const channel = guild.channels.cache.find(
-    (channel) => channel.type === 'GUILD_TEXT'
+    (channel) => channel.type == 'GUILD_TEXT'
   );
   if (
     channel &&
