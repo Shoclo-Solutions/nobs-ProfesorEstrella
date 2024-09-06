@@ -50,7 +50,8 @@ module.exports = {
     });
 
     if (totalPages > 1) {
-      await addPaginationReactions(embedMessage);
+      await embedMessage.react('⬅️');
+      await embedMessage.react('➡️');
       setupPaginationCollector(embedMessage, paramProfe, page, totalPages);
     }
 
@@ -122,15 +123,6 @@ const createEmbed = (professors, paramProfe, page, totalPages) => {
   const row = new ActionRowBuilder().addComponents(buttons);
 
   return { embed, row };
-};
-
-/**
- * Adds pagination reactions to the message.
- * @param {import('discord.js').Message} embedMessage
- */
-const addPaginationReactions = async (embedMessage) => {
-  await embedMessage.react('⬅️');
-  await embedMessage.react('➡️');
 };
 
 /**
@@ -338,7 +330,8 @@ const setupButtonCollector = (embedMessage, commandInteraction) => {
         await i.update({ embeds: [embed], components: [row] });
 
         if (totalPages > 1) {
-          await addPaginationReactions(embedMessage);
+          await embedMessage.react('⬅️');
+          await embedMessage.react('➡️');
         }
       }
     } catch (error) {
