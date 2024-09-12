@@ -14,7 +14,7 @@ const PAGE_SIZE = 4;
 module.exports = {
   /** @type {import('commandkit').CommandData}  */
   data: {
-    name: 'lookup',
+    name: 'buscar',
     description: 'Busca a un profesor en la base de datos.',
     options: [
       {
@@ -22,6 +22,8 @@ module.exports = {
         description: 'Nombre(s) y/o apellido(s) del profesor a buscar.',
         type: 3,
         required: true,
+        min_length: 2,
+        max_length: 200,
       },
     ],
   },
@@ -66,6 +68,7 @@ module.exports = {
       'AddReactions',
       'ManageMessages',
     ],
+    deleted: false,
   },
 };
 

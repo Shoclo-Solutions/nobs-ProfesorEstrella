@@ -2,7 +2,7 @@ require('dotenv/config');
 
 const { Client, IntentsBitField } = require('discord.js');
 const { CommandKit } = require('commandkit');
-const { syncAndSeedDB } = require('../.external/syncdb');
+const { syncAndSeedDB } = require('./utils/syncdb');
 const { default: startAllJobs } = require('./procedures/jobHoarder');
 
 const client = new Client({
