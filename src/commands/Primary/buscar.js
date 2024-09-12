@@ -68,6 +68,7 @@ module.exports = {
       'AddReactions',
       'ManageMessages',
     ],
+    deleted: false,
   },
 };
 

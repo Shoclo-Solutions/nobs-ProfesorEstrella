@@ -8,9 +8,9 @@ module.exports = {
       'Sugiere a un profesor que no se encuentre en los resultados de búsqueda.',
     options: [
       {
-        name: 'Archivo de prueba',
+        name: 'evidencia',
         description: 'Archivo PPT o jpeg/jpg con la presentación del profesor.',
-        type: '11',
+        type: 11,
         required: true,
       },
     ],
