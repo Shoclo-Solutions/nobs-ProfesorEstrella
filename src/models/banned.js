@@ -20,3 +20,5 @@ const BannedTable = sequelizeInstance.define(
         paranoid: true,
     }
 );
+
+module.exports = BannedTable;
