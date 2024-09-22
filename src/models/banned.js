@@ -17,5 +17,8 @@ const BannedTable = sequelizeInstance.define(
     },
     {
         tableName: 'banned',
+        paranoid: true,
     }
 );
+
+module.exports = BannedTable;

@@ -535,7 +535,7 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
     console.error(`There was an error saving the comment: ${error}`);
     return interaction.reply({
       content:
-        'Hubo un error al guardar el comentario. Por favor, inténtalo de nuevo.',
+        `Hubo un error al guardar el comentario: ${error.message}`,
       ephemeral: true,
     });
   }
