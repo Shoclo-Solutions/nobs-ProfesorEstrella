@@ -13,51 +13,65 @@ module.exports = async (message) => {
 
     // Prefix command logic
     if (command === 'ban') {
-        const user = message.mentions.users.first();
+        // I won't use mentions
+        const user = args[0];
         if (!user) return message.reply('You need to mention a user to ban them!');
-        const member = message.guild.members.cache.get(user.id);
-        if (!member) return message.reply('That user is not in this server!');
         
         const [banned, created] = await BannedTable.findOrCreate({
             where: {
-                discordId: user.id,
+                discordId: user,
             },
             defaults: {
-                discordId: user.id,
+                discordId: user,
             }
+        }).catch(Error => {
+            console.error('There was an error while trying to ban a user:', Error);
         });
 
         if (!created) return message.reply('That user is already banned!');
 
         const user_has_comments = await Comment.findOne({
             where: {
-                by: user.id,
+                by: user,
             }
         });
 
-        if (!user_has_comments) return message.reply('That user has no comments to delete. They have been banned.');
+        if (!user_has_comments) return message.reply(`User ${user} has no comments to delete but they have been banned.`);
 
         await Comment.update({
             deletedAt: Date.now(),
         }, {
             where: {
-                by: user.id,
+                by: user,
             }
-        })
+        }).catch(Error => {
+            console.error('There was an error while trying to delete comments from a banned user:', Error);
+        });
 
-        return message.reply(`Successfully banned ${user.tag}`);
+        return message.reply(`Successfully banned user with ID ${user}`);
     } else if (command === 'unban') {
-        const user = message.mentions.users.first();
+        const user = args[0];
         if (!user) return message.reply('You need to mention a user to unban them!');
         
         const deleted = await BannedTable.destroy({
             where: {
-                discordId: user.id,
+                discordId: user,
             }
+        }).catch(Error => {
+            console.error('There was an error while trying to unban a user:', Error);
         });
 
         if (deleted === 0) return message.reply('That user is not banned!');
 
-        return message.reply(`Successfully unbanned ${user.tag}`);
+        // Restore the comments from the user
+        await Comment.restore({
+            where: {
+                by: user,
+            }
+        }).catch(Error => {
+            console.error('There was an error while trying to restore comments from a banned user:', Error);
+        })
+
+        return message.reply(`Successfully unbanned user with id ${user}`);
     }
 };
