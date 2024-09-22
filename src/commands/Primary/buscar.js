@@ -23,7 +23,7 @@ module.exports = {
         type: 3,
         required: true,
         min_length: 2,
-        max_length: 200,
+        max_length: 100,
       },
     ],
   },
@@ -54,10 +54,10 @@ module.exports = {
     if (totalPages > 1) {
       await embedMessage.react('⬅️');
       await embedMessage.react('➡️');
-      setupPaginationCollector(embedMessage, paramProfe, page, totalPages);
+      setupPaginationCollector(embedMessage, paramProfe, page, totalPages, interaction.user.id);
     }
 
-    setupButtonCollector(embedMessage, interaction);
+    setupButtonCollector(embedMessage, interaction, interaction.user.id);
   },
 
   /** @type {import('commandkit').CommandOptions} */
@@ -142,7 +142,7 @@ const setupPaginationCollector = (
   totalPages
 ) => {
   const filter = (reaction, user) => {
-    return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot;
+    return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot && user.id === interaction.user.id;
   };
 
   const collector = embedMessage.createReactionCollector({
@@ -180,9 +180,9 @@ const setupPaginationCollector = (
  * @param {import('discord.js').Message} embedMessage
  * @param {import('commandkit').SlashCommandProps} commandInteraction
  */
-const setupButtonCollector = (embedMessage, commandInteraction) => {
+const setupButtonCollector = (embedMessage, commandInteraction, whoStartedInteraction) => {
   const buttonFilter = (i) =>
-    i.customId.startsWith('prof_') && i.user.id === commandInteraction.user.id;
+    i.customId.startsWith('prof_') && i.user.id === whoStartedInteraction;
   const buttonCollector = embedMessage.createMessageComponentCollector({
     filter: buttonFilter,
     time: 120000,
