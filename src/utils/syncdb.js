@@ -48,7 +48,7 @@ async function syncAndSeedDB() {
         await Comment.bulkCreate(
           [
             {
-              by: '783708073390112830',
+              by: '418622182671777812',
               content: 'mi vida no es mas que un paseo en el parque',
               rating: 3,
               professorId: 1,
