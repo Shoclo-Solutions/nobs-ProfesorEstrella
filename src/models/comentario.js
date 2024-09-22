@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelizeInstance = require('../utils/database');
+const BannedModel = require('./banned');
 
 const Comment = sequelizeInstance.define(
   'comment',
@@ -35,6 +36,19 @@ const Comment = sequelizeInstance.define(
   {
     paranoid: true,
     tableName: 'comments',
+    hooks: {
+      beforeCreate: async (comment) => {
+        await BannedModel.findOne({
+          where: {
+            discordId: comment.by,
+          },
+        }).then((banned) => {
+          if (banned) {
+            throw new Error('Usuario baneado');
+          }
+        });
+      }
+    }
   }
 );
 
