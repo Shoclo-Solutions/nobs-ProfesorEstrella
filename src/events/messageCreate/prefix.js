@@ -1,9 +1,6 @@
 require('dotenv/config');
 const BannedTable = require('../../models/banned');
-<<<<<<< HEAD
 const Comment = require('../../models/comentario');
-=======
->>>>>>> c31c31e (Baneo mediante comando de prefijo)
 
 /** @param {import('discord.js').Message} message */
 module.exports = async (message) => {
