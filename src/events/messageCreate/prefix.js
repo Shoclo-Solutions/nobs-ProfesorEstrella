@@ -15,7 +15,7 @@ module.exports = async (message) => {
     if (command === 'ban') {
         // I won't use mentions
         const user = args[0];
-        if (!user) return message.reply('You need to mention a user to ban them!');
+        if (!user) return message.reply('You need to write the user ID to ban them!');
         
         const [banned, created] = await BannedTable.findOrCreate({
             where: {
