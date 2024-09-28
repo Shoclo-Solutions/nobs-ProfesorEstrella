@@ -33,6 +33,16 @@ module.exports = {
    */
   run: async ({ interaction, client }) => {
     const paramProfe = interaction.options.getString('profesor');
+
+    // Chequear si paramProfe contiene numeros o caracteres especiales
+    if (/\d/.test(paramProfe) || /[^a-zA-Z0-9\s]/.test(paramProfe)) {
+      return interaction.reply({
+        content:
+          'El nombre del profesor no puede contener números ni caracteres especiales.',
+        ephemeral: true,
+      });
+    }
+
     const page = 1;
 
     const { professors, count } = await fetchProfessors(paramProfe, page);
@@ -54,7 +64,13 @@ module.exports = {
     if (totalPages > 1) {
       await embedMessage.react('⬅️');
       await embedMessage.react('➡️');
-      setupPaginationCollector(embedMessage, paramProfe, page, totalPages, interaction.user.id);
+      setupPaginationCollector(
+        embedMessage,
+        paramProfe,
+        page,
+        totalPages,
+        interaction.user.id
+      );
     }
 
     setupButtonCollector(embedMessage, interaction, interaction.user.id);
@@ -142,7 +158,11 @@ const setupPaginationCollector = (
   totalPages
 ) => {
   const filter = (reaction, user) => {
-    return ['⬅️', '➡️'].includes(reaction.emoji.name) && !user.bot && user.id === interaction.user.id;
+    return (
+      ['⬅️', '➡️'].includes(reaction.emoji.name) &&
+      !user.bot &&
+      user.id === interaction.user.id
+    );
   };
 
   const collector = embedMessage.createReactionCollector({
@@ -180,7 +200,11 @@ const setupPaginationCollector = (
  * @param {import('discord.js').Message} embedMessage
  * @param {import('commandkit').SlashCommandProps} commandInteraction
  */
-const setupButtonCollector = (embedMessage, commandInteraction, whoStartedInteraction) => {
+const setupButtonCollector = (
+  embedMessage,
+  commandInteraction,
+  whoStartedInteraction
+) => {
   const buttonFilter = (i) =>
     i.customId.startsWith('prof_') && i.user.id === whoStartedInteraction;
   const buttonCollector = embedMessage.createMessageComponentCollector({
@@ -534,8 +558,7 @@ const handleCommentSubmit = async (interaction, selectedProfessor) => {
   } catch (error) {
     console.error(`There was an error saving the comment: ${error}`);
     return interaction.reply({
-      content:
-        `Hubo un error al guardar el comentario: ${error.message}`,
+      content: `Hubo un error al guardar el comentario: ${error.message}`,
       ephemeral: true,
     });
   }
