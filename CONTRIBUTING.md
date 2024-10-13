@@ -1,120 +1,119 @@
-# Contributing to [NoBS] Mi Profe Estrella
+# Contribuir a [NoBS] Mi Profe Estrella
 
-Thank you for your interest in contributing to [NoBS] Mi Profe Estrella! We are excited to see what you can do here.
+¡Gracias por su interés en contribuir a [NoBS] Mi Profe Estrella! Nos entusiasma ver lo que puedes hacer aquí.
 
-All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved.
+Animamos y valoramos todo tipo de contribuciones. Consulta la [Tabla de contenidos](#table-of-contents) para conocer las distintas formas de ayudar y los detalles sobre cómo se gestionan en este proyecto. Asegúrese de leer la sección correspondiente antes de realizar su contribución. Nos facilitará mucho las cosas a los encargados del mantenimiento y facilitará la experiencia a todos los implicados.
 
-> No time to contribute? You can still help us! Here are a few ways how you can support us:
+> ¿No tienes tiempo para contribuir? Aún puede ayudarnos. Aquí tienes algunas formas de ayudarnos:
 >
-> - Star the project
-> - Refer this project in your project's readme
+> - Hazte fan del proyecto
+> - Haz referencia a este proyecto en el léame de tu proyecto
 
 ## Table of Contents
 
-- [I Have a Question](#i-have-a-question)
-- [I Want To Contribute](#i-want-to-contribute)
-  - [Reporting Bugs](#reporting-bugs)
-  - [Suggesting Enhancements](#suggesting-enhancements)
-  - [Your First Code Contribution](#your-first-code-contribution)
-  - [Improving The Documentation](#improving-the-documentation)
+- [Tengo una pregunta](#tengo-una-pregunta)
+- [Quiero contribuir](#quiero-contribuir)
+  - [Reportar bugs](#reportar-bugs)
+  - [Sugerir mejoras](#sugerir-mejoras)
+  - [Tu primera contribución](#tu-primera-contribución)
+  - [Mejorando la documentación](#mejorando-la-documentación)
 
-## I Have a Question
+## Tengo una pregunta
 
-Before you ask a question, it is best to search for existing [Issues](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+Antes de plantear una pregunta, lo mejor es buscar [issues] existentes (https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) que puedan ayudarle. En caso de que haya encontrado un issue adecuado y siga necesitando aclaraciones, puede escribir su pregunta en esa issue. También es aconsejable buscar primero respuestas en Internet.
 
-If you then still feel the need to ask a question and need clarification, we recommend the following:
+Si después sigues sintiendo la necesidad de hacer una pregunta y necesitas aclaraciones, te recomendamos lo siguiente:
 
-- Open an [Issue](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues/new/choose).
-- Choose the blank issue template.
-- Provide as much context as you can about what you're running into.
-- Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
-- Select the `question` label.
+- Abra una [incidencia](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues/new/choose).
+- Elige la plantilla en blanco.
+- Proporciona todo el contexto que puedas sobre con qué te estás encontrando.
+- Proporciona las versiones del proyecto y de la plataforma (nodejs, npm, etc), dependiendo de lo que parezca relevante.
+- Selecciona la etiqueta `question`.
 
-We will then take care of the issue as soon as possible.
+Nos ocuparemos del problema lo antes posible.
 
-## I Want To Contribute
+Traducción realizada con la versión gratuita del traductor DeepL.com
 
-> ### Legal Notice
->
-> When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
+## Quiero contribuir
 
-### Reporting Bugs
+### Reportar bugs
 
-#### Before Submitting a Bug Report
+#### Antes de reportar un bug
 
-A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+Un buen informe de error no debería obligar a otros a buscarle para obtener más información. Por lo tanto, le pedimos que investigue detenidamente, recopile información y describa el problema con detalle en su informe. Por favor, complete los siguientes pasos por adelantado para ayudarnos a solucionar cualquier posible error lo más rápido posible.
 
-- Make sure that you are using the latest version.
-- Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (If you are looking for support, you might want to check [this section](#i-have-a-question)).
-- To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/labels/bug).
-- Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
-- Collect information about the bug:
-  - Stack trace (Traceback)
-  - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-  - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
-  - Possibly your input and the output
-  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+- Asegúrese de que utiliza la última versión.
+- Determine si su fallo es realmente un fallo y no un error por su parte, por ejemplo, el uso de componentes/versiones de entorno incompatibles (Si está buscando ayuda, puede que desee consultar [esta sección].(#tengo-una-pregunta)).
+- Para ver si otros usuarios han experimentado (y potencialmente ya resuelto) el mismo problema que usted tiene, compruebe si no existe ya un informe de fallo para su fallo o error en el [bug tracker](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/labels/bug).
+- Asegúrate también de buscar en Internet (incluido Stack Overflow) para ver si usuarios ajenos a la comunidad de GitHub han comentado el problema.
+- Recopila información sobre el error:
+  - Rastreo de pila (Traceback)
+  - Sistema operativo, plataforma y versión (Windows, Linux, macOS)
+  - Versión del intérprete, gestor de paquetes, dependiendo de lo que parezca relevante.
+  - Posiblemente su entrada y la salida
+  - ¿Puedes reproducir el problema de forma fiable? ¿Puedes reproducirlo también con versiones anteriores?
 
-#### How Do I Submit a Good Bug Report?
+#### ¿Cómo envío un buen informe de error?
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <fallaangello@gmail.com>.
+> Nunca debe informar de problemas relacionados con la seguridad, vulnerabilidades o errores que incluyan información sensible en el rastreador de problemas, o en cualquier otro lugar en público. Los errores sensibles deben enviarse por correo electrónico a <fallaangello@gmail.com>.
 
-We use GitHub issues to track bugs and errors. If you run into an issue with the project:
+Usamos GitHub issues para rastrear fallos y errores. Si te encuentras con un problema con el proyecto:
 
-- Open an [Issue](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues/new/choose). (Since we can't be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)
-- Choose the bug report template.
-- Explain the behavior you would expect and the actual behavior.
-- Please provide as much context as possible and describe the _reproduction steps_ that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.
-- Provide the information you collected in the previous section.
+- Abre un [issue](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues/new/choose). (Como en este momento no podemos estar seguros de si se trata de un error o no, te pedimos que no hables de error todavía y que no etiquetes la incidencia).
+- Elige la plantilla de informe de fallo.
+- Explique el comportamiento que esperaría y el comportamiento real.
+- Proporcione tanto contexto como sea posible y describa los _pasos de reproducción_ que otra persona puede seguir para recrear el problema por su cuenta. Esto suele incluir su código. Para los buenos informes de errores, debe aislar el problema y crear un caso de prueba reducido.
+- Proporciona la información que has recopilado en la sección anterior.
 
-Once it's filed:
+Una vez archivado:
 
-- The project team will label the issue accordingly.
-- A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as `needs-repro`. Bugs with the `needs-repro` tag will not be addressed until they are reproduced.
-- If the team is able to reproduce the issue, it will be marked `needs-fix`, as well as possibly other tags (such as `critical`), and the issue will be left to be [implemented by someone](#your-first-code-contribution).
+- El equipo del proyecto etiquetará la incidencia como corresponda.
+- Un miembro del equipo intentará reproducir el problema con los pasos que has proporcionado. Si no hay pasos de reproducción o no hay una manera obvia de reproducir el problema, el equipo le pedirá esos pasos y marcará el problema como `needs-repro`. Los errores con la etiqueta `needs-repro` no se tratarán hasta que se reproduzcan.
+- Si el equipo es capaz de reproducir el problema, se marcará como `needs-fix`, así como posiblemente otras etiquetas (como `critical`), y el problema se dejará para ser [implementado por alguien](#).
 
 <!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
 
-### Suggesting Enhancements
+### Sugerir mejoras
 
-This section guides you through submitting an enhancement suggestion for [NoBS] Mi Profe Estrella, **including completely new features and minor improvements to existing functionality**. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
+Esta sección le guiará a la hora de enviar una sugerencia de mejora para [NoBS] Mi Profe Estrella, **incluyendo características completamente nuevas y pequeñas mejoras de la funcionalidad existente**. Seguir estas directrices ayudará a los mantenedores y a la comunidad a entender su sugerencia y a encontrar sugerencias relacionadas.
 
-#### Before Submitting an Enhancement
+#### Antes de enviar una mejora
 
-- Make sure that you are using the latest version.
-- Perform a [search](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
-- Find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset.
+- Asegúrese de que está utilizando la última versión.
+- Realice una [búsqueda](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) para ver si la mejora ya ha sido sugerida. Si es así, añada un comentario a la incidencia existente en lugar de abrir una nueva.
+- Averigua si tu idea encaja con el alcance y los objetivos del proyecto. En tus manos está argumentar con fuerza para convencer a los desarrolladores del proyecto de las ventajas de esta función. Ten en cuenta que queremos funciones que sean útiles para la mayoría de nuestros usuarios y no sólo para un pequeño subgrupo.
 
-#### How Do I Submit a Good Enhancement Suggestion?
+#### ¿Cómo envío una buena sugerencia de mejora?
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues).
+Las sugerencias de mejora se registran como [GitHub issues](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues).
 
-- Start by opening an issue with the `Feature request` template.
-- Use a **clear and descriptive title** for the issue to identify the suggestion.
-- Provide a **step-by-step description of the suggested enhancement** in as many details as possible.
-- **Describe the current behavior** and **explain which behavior you expected to see instead** and why. At this point you can also tell which alternatives do not work for you.
-- You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows.
-- **Explain why this enhancement would be useful** to most [NoBS] Mi Profe Estrella users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
+- Comienza abriendo una incidencia con la plantilla `Feature request`.
+- Utiliza un **título claro y descriptivo** para identificar la sugerencia.
+- Proporcione una **descripción paso a paso de la mejora sugerida** lo más detallada posible.
+- Describa el comportamiento actual y explique qué comportamiento espera ver en su lugar y por qué. En este punto también puede decir qué alternativas no le funcionan.
+- Puedes **incluir capturas de pantalla y GIF animados** que te ayuden a demostrar los pasos o señalar la parte con la que está relacionada la sugerencia. Puedes utilizar [esta herramienta](https://www.cockos.com/licecap/) para grabar GIFs en macOS y Windows.
+- **Explica por qué esta mejora sería útil** para la mayoría de los usuarios de [NoBS] Mi Profe Estrella. También puedes señalar otros proyectos que lo resolvieron mejor y que podrían servir de inspiración.
 
-### Your First Code Contribution
+### Tu Primera Contribución de Código
 
-All instructions for contributing code to [NoBS] Mi Profe Estrella, including setup instructions, are available in the [README](./README.md). If you are looking for a place to start, you can look at the issues labeled with `good first issue`.
+Todas las instrucciones para contribuir con código a [NoBS] Mi Profe Estrella, incluyendo las instrucciones de configuración, están disponibles en el [README](./README.md). Si estás buscando un lugar por donde empezar, puedes mirar los temas etiquetados con `good first issue`.
 
-### Improving The Documentation
+### Mejorar La Documentación
 
 <!-- TODO
-Updating, improving and correcting the documentation
+Actualizar, mejorar y corregir la documentación
 -->
 
-Found a typo in the documentation? Think something is unclear? Want to add a section? Great! We appreciate your effort to improve the documentation.
+¿Has encontrado una errata en la documentación? ¿Crees que algo no está claro? ¿Quieres añadir una sección? Perfecto. Apreciamos tu esfuerzo por mejorar la documentación.
 
-- Clone the `documentation` branch.
-- Make your changes.
-  > All documentation is stored in the `docs` folder. You can edit the markdown files directly on GitHub or clone the repository and edit them locally.
-- Commit your changes.
-- Push your changes to your fork.
-- Open a pull request to the `documentation` branch of the main repository.
+- Clona la rama `documentation`.
+- Asegúrate de tener la última versión de la rama.
+- Haz tus cambios.
+  > Parte de la documentación se almacena en la carpeta `docs`. Puedes editar los archivos markdown directamente en GitHub o clonar el repositorio y editarlos localmente.
+- Confirma tus cambios.
+- Empuja tus cambios a tu fork.
+- Abre un pull request a la rama `documentation` del repositorio principal.
 
-## Attribution
+## Atribución
 
-This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
+Esta guía está basada en el **contributing-gen**. [¡Haz la tuya!](https://github.com/bttger/contributing-gen)!
