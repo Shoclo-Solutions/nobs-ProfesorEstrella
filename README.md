@@ -9,6 +9,9 @@
 
 Con este bot, se busca agilizar el proceso de matricula de los alumnos mediante la recomendación de profesores.
 
+
+> Importante: Este bot se encuentra en fase de desarrollo, por lo que es posible que no se encuentre disponible en todo momento.
+
 [Try it!](https://discord.com/oauth2/authorize?client_id=1271110418882101312)
 
 ## Features
@@ -24,7 +27,7 @@ Con este bot, se busca agilizar el proceso de matricula de los alumnos mediante 
 
 ## Contribuciones
 
-Debido a la fase temprana del proyecto, las contribuciones, problemas y solicitudes de funciones son bienvenidas.
+Debido a la fase temprana del proyecto, las contribuciones, problemas y solicitudes de funciones son bienvenidas y necesitadas.
 
 Cabe recalcar que estos están adheridos al [código de conducta](.github\docs\CODE_OF_CONDUCT.md) del proyecto.
 
@@ -77,4 +80,4 @@ Cabe recalcar que estos están adheridos al [código de conducta](.github\docs\C
 
 ## Roadmap
 
-Visita el trello del proyecto para ver el [roadmap](https://trello.com/b/yUarj65g/mi-profe-estrella).
+Visita el trello del proyecto para ver el [mapa de tareas](https://github.com/orgs/Shoclo-Solutions/projects/2).
