@@ -73,46 +73,47 @@ Una vez archivado:
 
 <!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
 
-### Suggesting Enhancements
+### Sugerir mejoras
 
-This section guides you through submitting an enhancement suggestion for [NoBS] Mi Profe Estrella, **including completely new features and minor improvements to existing functionality**. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
+Esta sección le guiará a la hora de enviar una sugerencia de mejora para [NoBS] Mi Profe Estrella, **incluyendo características completamente nuevas y pequeñas mejoras de la funcionalidad existente**. Seguir estas directrices ayudará a los mantenedores y a la comunidad a entender su sugerencia y a encontrar sugerencias relacionadas.
 
-#### Before Submitting an Enhancement
+#### Antes de enviar una mejora
 
-- Make sure that you are using the latest version.
-- Perform a [search](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
-- Find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset.
+- Asegúrese de que está utilizando la última versión.
+- Realice una [búsqueda](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues) para ver si la mejora ya ha sido sugerida. Si es así, añada un comentario a la incidencia existente en lugar de abrir una nueva.
+- Averigua si tu idea encaja con el alcance y los objetivos del proyecto. En tus manos está argumentar con fuerza para convencer a los desarrolladores del proyecto de las ventajas de esta función. Ten en cuenta que queremos funciones que sean útiles para la mayoría de nuestros usuarios y no sólo para un pequeño subgrupo.
 
-#### How Do I Submit a Good Enhancement Suggestion?
+#### ¿Cómo envío una buena sugerencia de mejora?
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues).
+Las sugerencias de mejora se registran como [GitHub issues](https://github.com/Shoclo-Solutions/nobs-ProfesorEstrella/issues).
 
-- Start by opening an issue with the `Feature request` template.
-- Use a **clear and descriptive title** for the issue to identify the suggestion.
-- Provide a **step-by-step description of the suggested enhancement** in as many details as possible.
-- **Describe the current behavior** and **explain which behavior you expected to see instead** and why. At this point you can also tell which alternatives do not work for you.
-- You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows.
-- **Explain why this enhancement would be useful** to most [NoBS] Mi Profe Estrella users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
+- Comienza abriendo una incidencia con la plantilla `Feature request`.
+- Utiliza un **título claro y descriptivo** para identificar la sugerencia.
+- Proporcione una **descripción paso a paso de la mejora sugerida** lo más detallada posible.
+- Describa el comportamiento actual y explique qué comportamiento espera ver en su lugar y por qué. En este punto también puede decir qué alternativas no le funcionan.
+- Puedes **incluir capturas de pantalla y GIF animados** que te ayuden a demostrar los pasos o señalar la parte con la que está relacionada la sugerencia. Puedes utilizar [esta herramienta](https://www.cockos.com/licecap/) para grabar GIFs en macOS y Windows.
+- **Explica por qué esta mejora sería útil** para la mayoría de los usuarios de [NoBS] Mi Profe Estrella. También puedes señalar otros proyectos que lo resolvieron mejor y que podrían servir de inspiración.
 
-### Your First Code Contribution
+### Tu Primera Contribución de Código
 
-All instructions for contributing code to [NoBS] Mi Profe Estrella, including setup instructions, are available in the [README](./README.md). If you are looking for a place to start, you can look at the issues labeled with `good first issue`.
+Todas las instrucciones para contribuir con código a [NoBS] Mi Profe Estrella, incluyendo las instrucciones de configuración, están disponibles en el [README](./README.md). Si estás buscando un lugar por donde empezar, puedes mirar los temas etiquetados con `good first issue`.
 
-### Improving The Documentation
+### Mejorar La Documentación
 
 <!-- TODO
-Updating, improving and correcting the documentation
+Actualizar, mejorar y corregir la documentación
 -->
 
-Found a typo in the documentation? Think something is unclear? Want to add a section? Great! We appreciate your effort to improve the documentation.
+¿Has encontrado una errata en la documentación? ¿Crees que algo no está claro? ¿Quieres añadir una sección? Perfecto. Apreciamos tu esfuerzo por mejorar la documentación.
 
-- Clone the `documentation` branch.
-- Make your changes.
-  > All documentation is stored in the `docs` folder. You can edit the markdown files directly on GitHub or clone the repository and edit them locally.
-- Commit your changes.
-- Push your changes to your fork.
-- Open a pull request to the `documentation` branch of the main repository.
+- Clona la rama `documentation`.
+- Asegúrate de tener la última versión de la rama.
+- Haz tus cambios.
+  > Parte de la documentación se almacena en la carpeta `docs`. Puedes editar los archivos markdown directamente en GitHub o clonar el repositorio y editarlos localmente.
+- Confirma tus cambios.
+- Empuja tus cambios a tu fork.
+- Abre un pull request a la rama `documentation` del repositorio principal.
 
-## Attribution
+## Atribución
 
-This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!
+Esta guía está basada en el **contributing-gen**. [¡Haz la tuya!](https://github.com/bttger/contributing-gen)!
